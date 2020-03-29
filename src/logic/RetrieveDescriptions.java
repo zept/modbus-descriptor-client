@@ -37,7 +37,7 @@ public class RetrieveDescriptions {
         	if (validateData(response.getData())) {
         		ConvertDescriptionModel cdm = new ConvertDescriptionModel();
         		descriptions.add(cdm.mapByteArrayToDescriptionModel(response.getData()));
-        		printData(message);
+        		// printData(message);
         	} else break;
         }
 
