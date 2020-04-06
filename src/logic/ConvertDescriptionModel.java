@@ -1,6 +1,7 @@
 package logic;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -12,23 +13,25 @@ public class ConvertDescriptionModel {
     	DescriptionModel dm = new DescriptionModel();
     	dm.setFunctionCode(Byte.toUnsignedInt(bytes[0]));
     	dm.setAddress(((bytes[1] & 0xff) << 8) | (bytes[2] & 0xff));
-    	dm.setUnit(Byte.toUnsignedInt(bytes[3]));
-    	dm.setFormat(Byte.toUnsignedInt(bytes[4]));
-    	dm.setScaling((short)((bytes[5] & 0xff) << 8) | (bytes[6] & 0xff));
+    	dm.setFormat(Byte.toUnsignedInt(bytes[3]));
+    	dm.setScaling((short)((bytes[4] & 0xff) << 8) | (bytes[5] & 0xff));
     	
-    	int asciiStartPosition = 7;
-    	int delimiterPosition = -1;
+    	int asciiStartPosition = 6;
+    	ArrayList<Integer> delimiterPosition = new ArrayList<>();
     	int stopPosition = bytes.length;
     	
     	for (int i = asciiStartPosition; i < stopPosition; i++) {
     		if (bytes[i] == 124) {
-    			delimiterPosition = i;
+    			delimiterPosition.add(i);
     		}
     	}
     	
-    	byte[] tagName = Arrays.copyOfRange(bytes, asciiStartPosition, delimiterPosition);
-    	byte[] description = Arrays.copyOfRange(bytes, delimiterPosition + 1, stopPosition);
+    	byte[] unit = Arrays.copyOfRange(bytes, asciiStartPosition, delimiterPosition.get(0));
+    	byte[] tagName = Arrays.copyOfRange(bytes, delimiterPosition.get(0) + 1, delimiterPosition.get(1));
+    	byte[] description = Arrays.copyOfRange(bytes, delimiterPosition.get(1) + 1, stopPosition);
     	
+    	
+    	dm.setUnit(new String(unit, StandardCharsets.US_ASCII));
     	dm.setTagName(new String(tagName, StandardCharsets.US_ASCII));
     	dm.setDescription(new String(description, StandardCharsets.US_ASCII));
     	
@@ -42,7 +45,7 @@ public class ConvertDescriptionModel {
     	try {
         	dm.setFunctionCode((Integer) row.elementAt(0));
         	dm.setAddress((Integer) row.elementAt(1));
-        	dm.setUnit((Integer) row.elementAt(2));
+        	dm.setUnit((String) row.elementAt(2));
         	dm.setFormat((Integer) row.elementAt(3));
         	dm.setScaling((Integer) row.elementAt(4)); 
         	dm.setTagName((String) row.elementAt(5));

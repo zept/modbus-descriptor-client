@@ -43,7 +43,7 @@ public class ExportToCsv implements ExportToFile{
 			writer.append(delimiter);
 			writer.append(descModel.getAddress().toString());
 			writer.append(delimiter);
-			writer.append(descModel.getUnit().toString());
+			writer.append(descModel.getUnit());
 			writer.append(delimiter);
 			writer.append(descModel.getFormat().toString());
 			writer.append(delimiter);

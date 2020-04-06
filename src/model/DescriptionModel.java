@@ -3,7 +3,7 @@ package model;
 public class DescriptionModel {
 	private Integer functionCode;
 	private Integer address;
-	private Integer unit;
+	private String unit;
 	private Integer format;
 	private Integer scaling;
 	private String tagName;
@@ -24,10 +24,10 @@ public class DescriptionModel {
 	public void setAddress(Integer address) {
 		this.address = address;
 	}
-	public Integer getUnit() {
+	public String getUnit() {
 		return unit;
 	}
-	public void setUnit(Integer unit) {
+	public void setUnit(String unit) {
 		this.unit = unit;
 	}
 	public Integer getFormat() {
