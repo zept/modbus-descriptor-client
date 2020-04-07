@@ -4,7 +4,7 @@ public class DescriptionModel {
 	private Integer functionCode;
 	private Integer address;
 	private String unit;
-	private Integer format;
+	private String format;
 	private Integer scaling;
 	private String tagName;
 	private String description;
@@ -30,10 +30,10 @@ public class DescriptionModel {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public Integer getFormat() {
+	public String getFormat() {
 		return format;
 	}
-	public void setFormat(Integer format) {
+	public void setFormat(String format) {
 		this.format = format;
 	}
 	public Integer getScaling() {

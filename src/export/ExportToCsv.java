@@ -15,10 +15,6 @@ public class ExportToCsv implements ExportToFile{
 		WriteStatus status = new WriteStatus();
 		status.setFileName(fileName + fileType);
 		
-		System.out.println(fileName);
-		System.out.println(fileType);
-		System.out.println(status.getFileName());
-		
 		// Check the list
 		if (descList == null || descList.isEmpty()) {
 			status.setLinesWritten(0);

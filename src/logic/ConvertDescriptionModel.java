@@ -13,9 +13,12 @@ public class ConvertDescriptionModel {
     	DescriptionModel dm = new DescriptionModel();
     	dm.setFunctionCode(Byte.toUnsignedInt(bytes[0]));
     	dm.setAddress(((bytes[1] & 0xff) << 8) | (bytes[2] & 0xff));
-    	dm.setFormat(Byte.toUnsignedInt(bytes[3]));
     	dm.setScaling((short)((bytes[4] & 0xff) << 8) | (bytes[5] & 0xff));
     	
+    	// Get description from lookup table
+    	dm.setFormat(FormatDataType.getDescription(Byte.toUnsignedInt(bytes[3])));
+    	
+    	// Handle textfields
     	int asciiStartPosition = 6;
     	ArrayList<Integer> delimiterPosition = new ArrayList<>();
     	int stopPosition = bytes.length;
@@ -46,7 +49,7 @@ public class ConvertDescriptionModel {
         	dm.setFunctionCode((Integer) row.elementAt(0));
         	dm.setAddress((Integer) row.elementAt(1));
         	dm.setUnit((String) row.elementAt(2));
-        	dm.setFormat((Integer) row.elementAt(3));
+        	dm.setFormat((String) row.elementAt(3));
         	dm.setScaling((Integer) row.elementAt(4)); 
         	dm.setTagName((String) row.elementAt(5));
         	dm.setDescription((String) row.elementAt(6));
