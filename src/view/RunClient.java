@@ -20,6 +20,8 @@ import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.JTabbedPane;
 import java.awt.Color;
+
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import logic.ConfigureIpParameters;
@@ -408,6 +410,14 @@ public class RunClient {
 		tblDescription.getColumnModel().getColumn(8).setPreferredWidth(60);
 		tblDescription.setFillsViewportHeight(true);
 		pnlTableScroll.setViewportView(tblDescription);
+		
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+		tblDescription.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		tblDescription.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		tblDescription.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+		tblDescription.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		tblDescription.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
 		
 		JPanel pnlExport = new JPanel();
 		pnlExport.setBorder(new TitledBorder(null, "Output", TitledBorder.LEADING, TitledBorder.TOP, null, null));
