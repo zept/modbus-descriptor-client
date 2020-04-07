@@ -82,7 +82,7 @@ public class RunClient {
 	 */
 	private void initialize() {
 		frmModbusDecriptionClient = new JFrame();
-		frmModbusDecriptionClient.setTitle("Modbus decription client");
+		frmModbusDecriptionClient.setTitle("Modbus description client");
 		frmModbusDecriptionClient.setBounds(100, 100, 795, 586);
 		frmModbusDecriptionClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
