@@ -5,7 +5,7 @@ public class DescriptionModel {
 	private Integer address;
 	private String unit;
 	private String format;
-	private Integer scaling;
+	private String scaling;
 	private String tagName;
 	private String description;
 	private float minValue;
@@ -36,10 +36,10 @@ public class DescriptionModel {
 	public void setFormat(String format) {
 		this.format = format;
 	}
-	public Integer getScaling() {
+	public String getScaling() {
 		return scaling;
 	}
-	public void setScaling(Integer scaling) {
+	public void setScaling(String scaling) {
 		this.scaling = scaling;
 	}
 	public String getTagName() {
