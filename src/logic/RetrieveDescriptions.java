@@ -30,7 +30,7 @@ public class RetrieveDescriptions {
         master.setRetries(0);
         master.init();
         
-        for (int address = offset; address <= offset + length; address++ ) {
+        for (int address = offset; address <= offset + (length - 1); address++ ) {
         	ModbusResponse message = master.getSlaveDescription(node, address);
         	ReadResponse response = (ReadResponse) message;
         	//printData(message);
