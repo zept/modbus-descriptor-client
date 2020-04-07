@@ -87,9 +87,9 @@ public class RunClient {
 		frmModbusDecriptionClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {0};
-		gridBagLayout.rowHeights = new int[] {0, 0, 0};
+		gridBagLayout.rowHeights = new int[] {0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0};
 		frmModbusDecriptionClient.getContentPane().setLayout(gridBagLayout);
 		
 		JTabbedPane pnlTabbedSettings = new JTabbedPane(JTabbedPane.TOP);
@@ -319,12 +319,69 @@ public class RunClient {
 		JPanel pnlSerial = new JPanel();
 		pnlTabbedSettings.addTab("Serial", null, pnlSerial, null);
 		
+		JPanel pnlNavButtons = new JPanel();
+		GridBagConstraints gbc_pnlNavButtons = new GridBagConstraints();
+		gbc_pnlNavButtons.anchor = GridBagConstraints.WEST;
+		gbc_pnlNavButtons.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlNavButtons.fill = GridBagConstraints.VERTICAL;
+		gbc_pnlNavButtons.gridx = 0;
+		gbc_pnlNavButtons.gridy = 1;
+		frmModbusDecriptionClient.getContentPane().add(pnlNavButtons, gbc_pnlNavButtons);
+		
+		JButton btnNewRow = new JButton("New row");
+		btnNewRow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				// Skapa ny tom rad i Jtable
+				DefaultTableModel dtm = (DefaultTableModel) tblDescription.getModel();
+				String[] row = new String[dtm.getColumnCount()];
+				dtm.addRow(row);
+				
+			}
+		});
+		pnlNavButtons.add(btnNewRow);
+		
+		JButton btnTaBortRader = new JButton("Remove row(s)");
+		btnTaBortRader.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// Remove all selected rows. In reverse not to change index of those below.
+				DefaultTableModel dtm = (DefaultTableModel) tblDescription.getModel();
+				for (int i = tblDescription.getSelectedRows().length -1; i>=0; i--) {
+					dtm.removeRow(tblDescription.getSelectedRows()[i]);
+				}
+				
+			}
+		});
+		pnlNavButtons.add(btnTaBortRader);
+		
+		JButton btnSelectAll = new JButton("Select all");
+		btnSelectAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				tblDescription.selectAll();
+				
+			}
+		});
+		pnlNavButtons.add(btnSelectAll);
+		
+		JButton btnClearTable = new JButton("Clear table");
+		btnClearTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultTableModel dtm = (DefaultTableModel) tblDescription.getModel();
+				dtm.setRowCount(0);
+				
+			}
+		});
+		pnlNavButtons.add(btnClearTable);
+		
 		JScrollPane pnlTableScroll = new JScrollPane();
 		GridBagConstraints gbc_pnlTableScroll = new GridBagConstraints();
 		gbc_pnlTableScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlTableScroll.fill = GridBagConstraints.BOTH;
 		gbc_pnlTableScroll.gridx = 0;
-		gbc_pnlTableScroll.gridy = 1;
+		gbc_pnlTableScroll.gridy = 2;
 		frmModbusDecriptionClient.getContentPane().add(pnlTableScroll, gbc_pnlTableScroll);
 		
 		tblDescription = new JTable();
@@ -355,10 +412,9 @@ public class RunClient {
 		JPanel pnlExport = new JPanel();
 		pnlExport.setBorder(new TitledBorder(null, "Output", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlExport = new GridBagConstraints();
-		gbc_pnlExport.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlExport.fill = GridBagConstraints.BOTH;
 		gbc_pnlExport.gridx = 0;
-		gbc_pnlExport.gridy = 2;
+		gbc_pnlExport.gridy = 3;
 		frmModbusDecriptionClient.getContentPane().add(pnlExport, gbc_pnlExport);
 		
 		JPanel pnlFileName = new JPanel();
