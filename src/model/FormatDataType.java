@@ -126,7 +126,12 @@ public class FormatDataType {
 	
 	public static String getDescription(int index) {
 		String value = "UNKNOWN_FORMAT";
-		return formatDataTypes.get(index);
+		
+		if (formatDataTypes.containsKey(index)) {
+			value = formatDataTypes.get(index);
+		}
+		
+		return value;
 	}
 	
 }

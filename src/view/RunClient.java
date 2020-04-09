@@ -28,6 +28,7 @@ import logic.ConfigureIpParameters;
 import logic.ConvertDescriptionModel;
 import logic.RetrieveDescriptions;
 import model.DescriptionModel;
+import model.FormatDataType;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import export.ExportFactory;
 import export.ExportToFile;
 import export.FileType;
 import export.WriteStatus;
+import javax.swing.JCheckBox;
 
 public class RunClient {
 
@@ -377,6 +379,14 @@ public class RunClient {
 			}
 		});
 		pnlNavButtons.add(btnClearTable);
+		
+		JCheckBox chbRawValues = new JCheckBox("Display raw values");
+		chbRawValues.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		pnlNavButtons.add(chbRawValues);
 		
 		JScrollPane pnlTableScroll = new JScrollPane();
 		GridBagConstraints gbc_pnlTableScroll = new GridBagConstraints();
