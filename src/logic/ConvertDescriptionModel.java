@@ -11,47 +11,54 @@ import model.FormatDataType;
 public class ConvertDescriptionModel {
 
     public DescriptionModel mapByteArrayToDescriptionModel(byte[] bytes) {
+
     	DescriptionModel dm = new DescriptionModel();
     	dm.setFunctionCode(Byte.toUnsignedInt(bytes[0]));
     	dm.setAddress(((bytes[1] & 0xff) << 8) | (bytes[2] & 0xff));
+
+    	// Get description from lookup table.
+    	dm.setFormat(FormatDataType.getDescription(Byte.toUnsignedInt(bytes[3])));
+    	dm.setScaling(String.valueOf((short) ((bytes[4] & 0xff) << 8) | (bytes[5] & 0xff)));
+
     	
     	
     	// Remove sign and set correct divisor / multiplier
-    	Integer scaling = (short) ((bytes[4] & 0xff) << 8) | (bytes[5] & 0xff);
-    	int signum = Integer.signum(scaling);
-    	String textScale = "Unknown";
+//    	Integer scaling = (short) ((bytes[4] & 0xff) << 8) | (bytes[5] & 0xff);
+//    	int signum = Integer.signum(scaling);
+//    	String textScale = "Unknown";
+//    	
+//    	switch (signum) {
+//    		case -1:
+//    			textScale = ("/ " + Math.abs(scaling));
+//    			break;
+//    		case 0:
+//    			textScale = ("* " + 1);
+//    			break;
+//    		case 1:
+//    			textScale = ("* " + scaling);
+//    			break;
+//    	}
+//    	
+//    	dm.setScaling(textScale);
     	
-    	switch (signum) {
-    		case -1:
-    			textScale = ("/ " + Math.abs(scaling));
-    			break;
-    		case 0:
-    			textScale = ("* " + 1);
-    			break;
-    		case 1:
-    			textScale = ("* " + scaling);
-    			break;
-    	}
+
     	
-    	dm.setScaling(textScale);
+    	// Handle textfields  	
+    	int unitLengthPos = 6;
+    	int unitLength = bytes[unitLengthPos];
     	
-    	// Get description from lookup table
-    	dm.setFormat(FormatDataType.getDescription(Byte.toUnsignedInt(bytes[3])));
+    	int tagNameLengthPos = unitLengthPos + unitLength + 1;
+    	int tagNameLength = bytes[tagNameLengthPos];
     	
-    	// Handle textfields
-    	int asciiStartPosition = 6;
-    	ArrayList<Integer> delimiterPosition = new ArrayList<>();
-    	int stopPosition = bytes.length;
+    	int descLengthPos = tagNameLengthPos + tagNameLength + 1;
+    	int descLength = bytes[descLengthPos];
     	
-    	for (int i = asciiStartPosition; i < stopPosition; i++) {
-    		if (bytes[i] == 124) {
-    			delimiterPosition.add(i);
-    		}
-    	}
     	
-    	byte[] unit = Arrays.copyOfRange(bytes, asciiStartPosition, delimiterPosition.get(0));
-    	byte[] tagName = Arrays.copyOfRange(bytes, delimiterPosition.get(0) + 1, delimiterPosition.get(1));
-    	byte[] description = Arrays.copyOfRange(bytes, delimiterPosition.get(1) + 1, stopPosition);
+    	
+    	
+    	byte[] unit = Arrays.copyOfRange(bytes, unitLengthPos + 1, tagNameLengthPos);
+    	byte[] tagName = Arrays.copyOfRange(bytes, tagNameLengthPos + 1, descLengthPos);
+    	byte[] description = Arrays.copyOfRange(bytes, (descLength == 0) ? bytes.length : descLengthPos + 1, bytes.length);
     	
     	
     	dm.setUnit(new String(unit, StandardCharsets.US_ASCII));
